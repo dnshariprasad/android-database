@@ -56,6 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+
+
+//        dbHelper.updateUser(sqLiteDatabase, 1, "A", "A", "A");
+
+//        dbHelper.deleteUser(sqLiteDatabase, 1);
+
+//        dbHelper.deleteAllUsrs(sqLiteDatabase);
+
         //validate input data
         validateInputData();
         //insert into table if valid data
@@ -100,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * it validates input data
      */
     private void validateInputData() {
+
         if (mobile_et.getText().toString().length() == 0) {
             name_et.setError("Should not be empty.");
             return;

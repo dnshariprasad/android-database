@@ -4,9 +4,18 @@ package hari.database;
  * Created by Hari on 04/02/16.
  */
 public class UserModel {
+    private int id;
     private String name;
     private String mobile;
     private String email;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;

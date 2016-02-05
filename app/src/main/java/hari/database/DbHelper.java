@@ -42,7 +42,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String SELECT_ALL_USERS = "SELECT * FROM " + TABLE_USERS;
 
     //array of columns
-    private static String[] USER_COLUMNS = {USERS_COLUMN_NAME, USERS_COLUMN_MOBILE, USERS_COLUMN_EMAIL};
+    private static String[] USER_COLUMNS = {USERS_COLUMN_ID,USERS_COLUMN_NAME, USERS_COLUMN_MOBILE, USERS_COLUMN_EMAIL};
 
 
     public DbHelper(Context context) {
@@ -88,6 +88,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Cursor cursor = sqLiteDatabase.query(TABLE_USERS, USER_COLUMNS, null, null, null, null, USERS_COLUMN_ID + " ASC");
         while (cursor.moveToNext()) {
             UserModel userModel = new UserModel();
+            userModel.setId(cursor.getInt(cursor.getColumnIndex(USERS_COLUMN_ID)));
             userModel.setName(cursor.getString(cursor.getColumnIndex(USERS_COLUMN_NAME)));
             userModel.setEmail(cursor.getString(cursor.getColumnIndex(USERS_COLUMN_EMAIL)));
             userModel.setMobile(cursor.getString(cursor.getColumnIndex(USERS_COLUMN_MOBILE)));
@@ -96,5 +97,29 @@ public class DbHelper extends SQLiteOpenHelper {
         }
 
         return userModels;
+    }
+
+    public void updateUser(SQLiteDatabase sqLiteDatabase, int id, String name, String email, String mobile) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USERS_COLUMN_NAME, name);
+        contentValues.put(USERS_COLUMN_MOBILE, mobile);
+        contentValues.put(USERS_COLUMN_EMAIL, email);
+        sqLiteDatabase.update(
+                TABLE_USERS,
+                contentValues,
+                USERS_COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)});
+    }
+
+    public void deleteUser(SQLiteDatabase sqLiteDatabase, int id) {
+        sqLiteDatabase.delete(
+                TABLE_USERS,
+                USERS_COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)});
+
+    }
+
+    public void deleteAllUsrs(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.delete(TABLE_USERS, null, null);
     }
 }
