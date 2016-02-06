@@ -39,11 +39,43 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(UsersAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final UsersAdapter.ViewHolder holder, final int position) {
         UserModel userModel = users.get(position);
         holder.name.setText(userModel.getName());
         holder.email.setText(userModel.getEmail());
         holder.mobile.setText(userModel.getMobile());
+        holder.options_iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(context, holder.options_iv);
+                popupMenu.inflate(R.menu.user_menu);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.delete_opt:
+                                ((MainActivity) context).getDbHelper().deleteUser(
+                                        ((MainActivity) context).getSqLiteDatabase(),
+                                        users.get(position).getId());
+                                users.remove(position);
+                                notifyItemRemoved(position);
+                                return true;
+                            case R.id.edit_opt:
+                                Intent intent = new Intent(context, DetailActivity.class);
+                                intent.putExtra(Constants.ID, users.get(position).getId());
+                                intent.putExtra(Constants.NAME, users.get(position).getName());
+                                intent.putExtra(Constants.EMAIL, users.get(position).getEmail());
+                                intent.putExtra(Constants.MOBILE, users.get(position).getMobile());
+                                context.startActivity(intent);
+                                return true;
+                            default:
+                                return true;
+                        }
+                    }
+                });
+                popupMenu.show();
+            }
+        });
     }
 
     @Override
@@ -67,33 +99,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            PopupMenu popupMenu = new PopupMenu(context, options_iv);
-            popupMenu.inflate(R.menu.user_menu);
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.delete_opt:
-                            ((MainActivity) context).getDbHelper().deleteUser(
-                                    ((MainActivity) context).getSqLiteDatabase(),
-                                    users.get(getLayoutPosition()).getId());
-                            users.remove(getLayoutPosition());
-                            notifyItemRemoved(getLayoutPosition());
-                            return true;
-                        case R.id.edit_opt:
-                            Intent intent = new Intent(context, DetailActivity.class);
-                            intent.putExtra(Constants.ID, users.get(getLayoutPosition()).getId());
-                            intent.putExtra(Constants.NAME, users.get(getLayoutPosition()).getName());
-                            intent.putExtra(Constants.EMAIL, users.get(getLayoutPosition()).getEmail());
-                            intent.putExtra(Constants.MOBILE, users.get(getLayoutPosition()).getMobile());
-                            context.startActivity(intent);
-                            return true;
-                        default:
-                            return true;
-                    }
-                }
-            });
-            popupMenu.show();
+
         }
     }
 }
