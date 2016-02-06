@@ -1,6 +1,7 @@
 package hari.database;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -80,6 +81,11 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                             notifyItemRemoved(getLayoutPosition());
                             return true;
                         case R.id.edit_opt:
+                            Intent intent = new Intent(context, DetailActivity.class);
+                            intent.putExtra(Constants.NAME, users.get(getLayoutPosition()).getName());
+                            intent.putExtra(Constants.EMAIL, users.get(getLayoutPosition()).getEmail());
+                            intent.putExtra(Constants.MOBILE, users.get(getLayoutPosition()).getMobile());
+                            context.startActivity(intent);
                             return true;
                         default:
                             return true;
