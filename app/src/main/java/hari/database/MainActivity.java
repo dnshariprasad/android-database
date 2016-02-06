@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        dbHelper.updateUser(sqLiteDatabase, 1, "A", "A", "A");
 
-//        dbHelper.deleteUser(sqLiteDatabase, 1);
-
 //        dbHelper.deleteAllUsrs(sqLiteDatabase);
 
         //validate input data
@@ -71,6 +69,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         new DatabaseTask().execute();
     }
 
+
+    public SQLiteDatabase getSqLiteDatabase() {
+        return sqLiteDatabase;
+    }
+
+    public void setSqLiteDatabase(SQLiteDatabase sqLiteDatabase) {
+        this.sqLiteDatabase = sqLiteDatabase;
+    }
+
+    public DbHelper getDbHelper() {
+        return dbHelper;
+    }
+
+    public void setDbHelper(DbHelper dbHelper) {
+        this.dbHelper = dbHelper;
+    }
 
     /**
      * it pulls all views
