@@ -82,6 +82,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                             return true;
                         case R.id.edit_opt:
                             Intent intent = new Intent(context, DetailActivity.class);
+                            intent.putExtra(Constants.ID, users.get(getLayoutPosition()).getId());
                             intent.putExtra(Constants.NAME, users.get(getLayoutPosition()).getName());
                             intent.putExtra(Constants.EMAIL, users.get(getLayoutPosition()).getEmail());
                             intent.putExtra(Constants.MOBILE, users.get(getLayoutPosition()).getMobile());

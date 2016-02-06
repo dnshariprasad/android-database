@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //init listeners
         initListeners();
 
-
         //initializations
         //create out db helper object
         dbHelper = new DbHelper(this);
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
 
-//        dbHelper.updateUser(sqLiteDatabase, 1, "A", "A", "A");
 
 //        dbHelper.deleteAllUsrs(sqLiteDatabase);
 
